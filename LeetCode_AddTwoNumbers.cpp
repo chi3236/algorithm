@@ -9,32 +9,14 @@
 class Solution {
 public: 
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        int end = 0;
         struct ListNode *answer = new ListNode(0);
-        struct ListNode *answerPointer = answer;
-        struct ListNode *currl1 = l1;
-        struct ListNode *currl2 = l2;
+        struct ListNode *currPointer = answer;
+        int curr = 0;
         int carry = 0;
-        while(true)
+        while(l1 != NULL && l2 != NULL)
         {
-            if(currl1->next == NULL || currl2->next == NULL)
-            {
-                if(currl1->next == NULL && currl2->next != NULL)
-                {
-                    end = 1;
-                }
-                else if(currl1->next != NULL && currl2->next == NULL)
-                {
-                    end = 2;
-                }
-                else if(currl1->next == NULL && currl2->next == NULL)
-                {
-                    end = 3;
-                }
-                break;
-            }
-            int curr = 0;
-            curr = currl1->val + currl2->val + carry;
+            curr = 0;
+            curr = l1->val + l2->val + carry;
             if(curr >= 10)
             {
                 carry = 1;
@@ -44,135 +26,48 @@ public:
             {
                 carry = 0;
             }
-            answerPointer -> val = curr;
-            answerPointer -> next = new struct ListNode(0);
-            answerPointer = answerPointer -> next;
-            currl1 = currl1->next;
-            currl2 = currl2->next;
+            currPointer -> val = curr;
+            if(l1 -> next != NULL || l2 -> next != NULL)
+            {
+                currPointer -> next = new struct ListNode(0);
+                currPointer = currPointer -> next;
+            }
+            l1 = l1->next;
+            l2 = l2->next;
         }
-        switch(end)
+        struct ListNode *currl = NULL;
+        if(l1 != NULL)
         {
-            case(1):
+            currl = l1;
+        }
+        if(l2 != NULL)
+        {
+            currl = l2;
+        }
+        while(currl != NULL)
+        {
+            curr = 0;
+            curr = currl->val + carry;
+            if(curr >= 10)
             {
-                int curr = carry + currl1->val + currl2->val;
-                if(curr >= 10)
-                {
-                    carry = 1;
-                    curr %= 10;
-                }
-                else
-                {
-                    carry = 0;
-                }
-                answerPointer -> val = curr;
-                answerPointer -> next = new struct ListNode(0);
-                answerPointer = answerPointer -> next;
-                currl2 = currl2->next;
-                while(currl2->next != NULL)
-                {
-                    curr = carry + currl2->val;
-                    if(curr >= 10)
-                    {
-                        carry = 1;
-                        curr %= 10;
-                    }
-                    else
-                    {
-                        carry = 0;
-                    }
-                    answerPointer -> val = curr;
-                    answerPointer -> next = new struct ListNode(0);
-                    answerPointer = answerPointer -> next;
-                    currl2 = currl2->next;
-                }
-                curr = carry + currl2->val;
-                if(curr >= 10)
-                {
-                    carry = 1;
-                    curr %= 10;
-                }
-                else
-                {
-                    carry = 0;
-                }
-                answerPointer -> val = curr;
-                if(carry == 1)
-                {
-                    answerPointer -> next = new struct ListNode(1);
-                }
-                break;
+                carry = 1;
+                curr %= 10; 
             }
-            case(2):
+            else
             {
-                int curr = carry + currl1->val + currl2->val;
-                if(curr >= 10)
-                {
-                    carry = 1;
-                    curr %= 10;
-                }
-                else
-                {
-                    carry = 0;
-                }
-                answerPointer -> val = curr;
-                answerPointer -> next = new struct ListNode(0);
-                answerPointer = answerPointer -> next;
-                currl1 = currl1->next;
-                while(currl1->next != NULL)
-                {
-                    curr = carry + currl1->val;
-                    if(curr >= 10)
-                    {
-                        carry = 1;
-                        curr %= 10;
-                    }
-                    else
-                    {
-                        carry = 0;
-                    }
-                    answerPointer -> val = curr;
-                    answerPointer -> next = new struct ListNode(0);
-                    answerPointer = answerPointer -> next;
-                    currl1 = currl1->next;
-                }
-                curr = carry + currl1->val;
-                if(curr >= 10)
-                {
-                    carry = 1;
-                    curr %= 10;
-                }
-                else
-                {
-                    carry = 0;
-                }
-                answerPointer -> val = curr;
-                if(carry == 1)
-                {
-                    answerPointer -> next = new struct ListNode(1);
-                }
-                break;
+                carry = 0;
             }
-            case(3):
+            currPointer -> val = curr;
+            if(currl -> next != NULL)
             {
-                int curr = carry + currl1->val + currl2->val;
-                if(curr >= 10)
-                {
-                    carry = 1;
-                    curr %= 10;
-                }
-                else
-                {
-                    carry = 0;
-                }
-                answerPointer -> val = curr;
-                if(carry == 1)
-                {
-                    answerPointer -> next = new struct ListNode(1);
-                }
-                break;
+                currPointer -> next = new struct ListNode(0);
+                currPointer = currPointer -> next;
             }
-            default:
-                break;
+            currl = currl->next;
+        }
+        if(carry > 0)
+        {
+            currPointer -> next = new struct ListNode(1);
         }
         return answer;
     }
