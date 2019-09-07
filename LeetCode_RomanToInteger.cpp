@@ -1,14 +1,7 @@
 class Solution {
 public:
     int romanToInt(string s) {
-        map<char, int> table;
-        table['I'] = 1;
-        table['V'] = 5;
-        table['X'] = 10;
-        table['L'] = 50;
-        table['C'] = 100;
-        table['D'] = 500;
-        table['M'] = 1000;
+        map<char, int> table = {{'I', 1}, {'V', 5}, {'X', 10}, {'L', 50}, {'C', 100}, {'D', 500}, {'M', 1000}};
         int i = 0;
         int answer = 0;
         while(i < s.length())
