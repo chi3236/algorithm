@@ -34,10 +34,10 @@ public:
             //even
             if(s[i] == s[i + 1])
             {
-                l = i - 1;
-                r = i + 2;
-                lf = i;
-                rf = i + 1;
+                int l = i - 1;
+                int r = i + 2;
+                int lf = i;
+                int rf = i + 1;
                 while(l >= 0 && r < s.length())
                 {
                     if(s[l] == s[r])
