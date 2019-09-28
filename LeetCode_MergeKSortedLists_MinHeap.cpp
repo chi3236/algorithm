@@ -32,15 +32,13 @@ public:
         }
         while(!minHeap.empty())
         {
-            ListNode* min = minHeap.top();
-            minHeap.pop();
-            ListNode* nextNode = new ListNode(min->val);
-            answerCurr->next = nextNode;
+            answerCurr->next = new ListNode(minHeap.top()->val);
             answerCurr = answerCurr -> next;
-            if(min -> next != NULL)
+            if(minHeap.top() -> next != NULL)
             {
-                minHeap.push(min->next);
+                minHeap.push(minHeap.top() -> next);
             }
+            minHeap.pop();
         }
         return answer->next;
     }
